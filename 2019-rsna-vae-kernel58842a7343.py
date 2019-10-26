@@ -23,7 +23,8 @@ submission_file = 'submission.csv'
 
 import os
 for f in [vae_weight_file,mlp_weight_file,submission_file]:
-    os.remove(f)
+    if os.path.exists(f):
+        os.remove(f)
     
 import json
 from kaggle_secrets import UserSecretsClient
@@ -365,7 +366,9 @@ else:
             ydf = ydf.join(dfs[n],how='left',on=['ID'])
             
     pd.DataFrame(ydf).to_csv('ydf.csv')
-    
+    import time
+    time.sleep(2)
+    ydf = pd.read_csv('ydf.csv')
 # ******************
 # TODO: reduce datatset to increase training
 # balance the label
